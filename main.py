@@ -1,8 +1,3 @@
-# This is a sample Python script.
-
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
-
 import requests
 from itertools import combinations,permutations
 rules=[
@@ -48,9 +43,12 @@ digits={
     "8",
     "9"
 }
-def generateSubdomain():
+def generateSubdomain(subs):
+    f2=open("jd_subdomain_0.txt","w+")
     domains=["jd"]
-    subs=["admin"]
+    subdomains_str=""
+    subdomain_count=0
+    k=0
     for sub in subs:
             for domain in domains:
                 for test in tests:
@@ -58,11 +56,12 @@ def generateSubdomain():
                         for split in splits:
                             for rule in rules:
                                 subdomain=rule
+                                sub_str=sub.strip()
                                 if "{domain}" in rule:
 
                                         subdomain=subdomain.replace("{domain}",domain)
                                 if "{sub}" in rule:
-                                        subdomain=subdomain.replace("{sub}",sub)
+                                        subdomain=subdomain.replace("{sub}",sub_str)
 
                                 if "{test}" in rule:
                                         subdomain=subdomain.replace("{test}",test)
@@ -72,16 +71,20 @@ def generateSubdomain():
 
                                 if "{digit}" in rule:
                                         subdomain=subdomain.replace("{digit}",digit)
+                                subdomains_str+=subdomain+"\n"
+                                subdomain_count+=1
+                                if subdomain_count==10000:
+                                    k+=1
+                                    print(k)
+                                    if k%100==0:
+                                        f2.close()
+                                        f2=open("jd_subdomain_"+str(int(k/100))+".txt","w+")
+                                    subdomain_count=0
+                                    f2.write(subdomains_str)
 
 
-                                print(subdomain)
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
-
-
+    f2.close()
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    generateSubdomain()
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    with open("dic.txt","r") as f:
+        generateSubdomain(f)
