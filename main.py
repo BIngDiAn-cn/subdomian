@@ -78,7 +78,7 @@ def generateSubdomain(subs):
                                     print(k)
                                     if k%1000==0:
                                         f2.close()
-                                        f2=open("jd_subdomain_"+str(int(k/100))+".txt","w+")
+                                        f2=open("jd_subdomain_"+str(int(k/1000))+".txt","w+")
                                     subdomain_count=0
                                     f2.write(subdomains_str)
                                     subdomains_str=""
