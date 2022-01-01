@@ -81,6 +81,7 @@ def generateSubdomain(subs):
                                         f2=open("jd_subdomain_"+str(int(k/100))+".txt","w+")
                                     subdomain_count=0
                                     f2.write(subdomains_str)
+                                    subdomains_str=""
 
 
     f2.close()
